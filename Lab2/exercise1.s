@@ -5,29 +5,34 @@ outputText:	.string ""
 
 .text
 
-begin:
-la a1,inputText
+la a1, inputText
 la a2, outputText
-li s0,6							# Loop stop condition
-li t0,0							# Iterator
-li t1,0							# Initial Offset
 
-loop:
-beq t0,s0,break					# If iterator == stop condition then break
+lb t1,0(a1)				#Load the start letter
+addi t1,t1,-32			#Capitalize
+sb t1,0(a2)				#Save the letter in outputText
 
-add t2,t1,a1					# Calculate the input with the offset
-lb t4,0(t2)						# Load the letter
+lb t1,1(a1)				
+addi t1,t1,-32			
+sb t1,1(a2)				
 
-addi t4,t4,-32					# Capitalize
+lb t1,2(a1)				
+addi t1,t1,-32			
+sb t1,2(a2)				
 
-add t3,t1,a2					# Calculate the output with the offset
-sb t4,0(t3)						# Saved the letter in output 
+lb t1,3(a1)				
+addi t1,t1,-32			
+sb t1,3(a2)				
 
-addi t1,t1,1					# Increment Offset
-addi t0,t0,1					# Iterator++
-beq a1,a1,loop
+lb t1,4(a1)				
+addi t1,t1,-32			
+sb t1,4(a2)				
 
-break:
+lb t1,5(a1)				#Load the end (6) letter
+addi t1,t1,-32			#Capitalize
+sb t1,5(a2)				#Save the letter outputText
+
+begin:
 la a0,outputText
 li a7,4
 ecall
