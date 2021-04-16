@@ -25,7 +25,9 @@ printInt: 	# a2 (in): value to print (int)
 beginPrint:
 #-----------
 # Save context
-addi sp,sp,-4
+addi sp,sp,-12
+sw a7,8(sp)
+sw a0,4(sp)
 sw a2,0(sp)
 #-----------
 mv a0,a2
@@ -34,8 +36,11 @@ ecall
 #-----------
 endPrint:
 # Restore Context
+
 lw a2,0(sp)
-addi sp,sp,4
+lw a0,4(sp)
+lw a7,8(sp)
+addi sp,sp,-12
 #-----------
 jalr zero,ra,0
 #-------------------------------------------------------------------------------------------
@@ -46,7 +51,9 @@ printStr: 	# a2 (in): value to print (string)
 beginPrintSrtr:
 #-----------
 # Save context
-addi sp,sp,-4
+addi sp,sp,-12
+sw a7,8(sp)
+sw a0,4(sp)
 sw a2,0(sp)
 #-----------
 mv a0,a2
@@ -56,7 +63,9 @@ ecall
 endPrintStr:
 # Restore Context
 lw a2,0(sp)
-addi sp,sp,4
+lw a0,4(sp)
+lw a7,8(sp)
+addi sp,sp,12
 #-----------
 jalr zero,ra,0
 #-------------------------------------------------------------------------------------------
@@ -67,7 +76,9 @@ printEndl: 	# nothing (in):
 beginPrintEndl:
 #-----------
 # Save context
-
+addi sp,sp,-8
+sw a7,4(sp)
+sw a0,0(sp)
 #-----------
 li a0,10		#Line Feed
 li a7,11
@@ -75,6 +86,9 @@ ecall
 #-----------
 endPrintEndl:
 # Restore Context
+lw a0,0(sp)
+lw a7,4(sp)
+addi sp,sp,8
 
 #-----------
 jalr zero,ra,0
