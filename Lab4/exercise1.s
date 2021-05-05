@@ -41,8 +41,6 @@ sw a0,0(sp)
 
 beq t1,a0,endPrintArray 	# If all values has been printed then break
 
-addi a1,a1,4				# Move pointer
-
 #------------------
 # print int
 lw a2,0(a1)
@@ -54,7 +52,7 @@ jal ra,printEndl
 #------------------
 
 addi t1,t1,1 				# Increment interator
-
+addi a1,a1,4				# Move pointer
 jal ra,printArray
 
 endPrintArray:
