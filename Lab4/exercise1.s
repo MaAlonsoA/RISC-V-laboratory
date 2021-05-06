@@ -14,7 +14,7 @@ list: 	.word 7
 bregin:
 la a1,list
 lw a0,length
-li,t1,0 				# Interator count
+li,t0,0 				# Interator count
 jal ra,printArray
 
 
@@ -23,23 +23,24 @@ li a7,10
 ecall
 
 
-#-------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
 printArray:  	# a0(in): Length of the array
 				# a1(in): Pointer to the beginning of the array 
-				# t1(in): Iterator start in 0
+				# t0(in): Iterator start in 0
 				# Function: Iterate a given array and print on the screen each of the values separated by a line break
 
 beginPrintArray:
 #-----------------
 # Save context
-addi sp,sp,-16
-sw ra,12(sp)
-sw t1,8(sp)
-sw a1,4(sp)
-sw a0,0(sp)
+addi sp,sp,-20
+sw ra,16(sp)
+sw a0,12(sp)
+sw a1,8(sp)
+sw a2,4(sp)
+sw t0,0(sp)
 #-----------------
 
-beq t1,a0,endPrintArray 	# If all values has been printed then break
+beq t0,a0,endPrintArray 	# If all values has been printed return
 
 #------------------
 # print int
@@ -51,21 +52,22 @@ jal ra,printInt
 jal ra,printEndl
 #------------------
 
-addi t1,t1,1 				# Increment interator
+addi t0,t0,1 				# Increment interator
 addi a1,a1,4				# Move pointer
 jal ra,printArray
 
 endPrintArray:
 # Restore Context
-lw a0,0(sp)
-lw a1,4(sp)
-lw t1,8(sp)
-lw ra,12(sp)
-addi sp,sp,16
+lw t0,0(sp)
+lw a2,4(sp)
+lw a1,8(sp)
+lw a0,12(sp)
+lw ra,16(sp)
+addi sp,sp,20
 #------------------
 jalr zero,ra,0
 #------------------
-#-------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------------------
 printInt: 	# a0 (in): value to print (int)
